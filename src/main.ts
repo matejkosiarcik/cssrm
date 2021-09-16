@@ -136,7 +136,7 @@ async function optimizeFile(input: string, output: string) {
 }
 
 async function getVersion(): Promise<string> {
-  const packagePath = path.join(__dirname, 'package.json');
+  const packagePath = path.join(path.dirname(__dirname), 'package.json');
   try {
     const packageContent = await fs.readFile(packagePath, 'utf-8');
     const { version } = JSON.parse(packageContent);
@@ -172,7 +172,7 @@ async function getVersion(): Promise<string> {
     .parse();
 
   if (argv.version) {
-    console.log(`cmmm v${await getVersion()}`);
+    console.log(`css-mini-mini-mini v${await getVersion()}`);
     return;
   }
   verbose = argv.verbose;

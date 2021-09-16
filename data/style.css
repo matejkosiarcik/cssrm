@@ -1,0 +1,8 @@
+body {
+  color: #123456;
+  background-color: black;
+}
+
+body > .something {
+  float: right;
+}

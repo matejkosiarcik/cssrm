@@ -15,7 +15,6 @@ all: bootstrap build
 .PHONY: bootstrap
 bootstrap:
 	npm ci
-	npm ci --prefix tests
 
 .PHONY: lint
 lint:
@@ -31,4 +30,4 @@ build:
 
 .PHONY: test
 test:
-	npm test --prefix tests
+	npm test
