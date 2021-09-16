@@ -1,0 +1,62 @@
+{
+  "name": "css-mini-mini-mini",
+  "license": "MIT",
+  "description": "CSS (almost) remynifier",
+  "homepage": "https://github.com/matejkosiarcik/css-mini-mini-mini#readme",
+  "keywords": [
+    "css",
+    "minifier",
+    "minify",
+    "remynify",
+    "remynifier"
+  ],
+  "bugs": {
+    "url": "https://github.com/matejkosiarcik/css-mini-mini-mini/issues"
+  },
+  "author": {
+    "name": "Matej Košiarčik",
+    "email": "matej.kosiarcik@gmail.com",
+    "url": "https://matejkosiarcik.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matejkosiarcik/css-mini-mini-mini.git"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "bin": {
+    "cmmm": "dist/main.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/main.js"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --max-warnings 0 \"**/*.{ts,js}\"",
+    "fmt": "eslint --fix \"**/*.{ts,js}\""
+  },
+  "dependencies": {
+    "clean-css-cli": "^5.3.3",
+    "crass": "^0.12.3",
+    "cssnano-cli": "^1.0.5",
+    "csso-cli": "^3.0.0",
+    "execa": "^5.1.1",
+    "hasha": "^5.2.2",
+    "yargs": "^17.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "@types/yargs": "^17.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}

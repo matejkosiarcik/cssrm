@@ -9,11 +9,12 @@ Thumbs.db
 node_modules/
 
 # editors
-.vscode/
-.idea/
 *.sublime-*
-Package Control.*
 *.vim
+.idea/
+.vs/
+.vscode/
+Package Control.*
 
-# misc
-report/
+# artifacts
+dist/
