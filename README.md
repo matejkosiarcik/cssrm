@@ -48,14 +48,14 @@ I haven't done any exhaustive benchmarks yet.
 The only comparison I have is from the CSS on my
 personal webpage at <https://github.com/matejkosiarcik/matejkosiarcik.com>.
 
-\- | CSS size \[B\] | possible gain \[%\]
---- | --- | ---
-Original | 18415 | 63.29
-_crass_ | 10926 | 38.14
-_cleancss_ | 10275 | 34.22
-_csso_ | 9569 | 29.37
-_cssnano_ | 7795 | 12.29
-_css-mini-mini-mini_ | 6759 | -
+| \-                   | CSS size \[B\] | possible gain \[%\] |
+| -------------------- | -------------- | ------------------- |
+| Original             | 18415          | 63.29               |
+| _crass_              | 10926          | 38.14               |
+| _cleancss_           | 10275          | 34.22               |
+| _csso_               | 9569           | 29.37               |
+| _cssnano_            | 7795           | 12.29               |
+| _css-mini-mini-mini_ | 6759           | -                   |
 
 As we can see, css-mini-mini-mini can gain between _12%_ and _38%_ over a single
 minifier.
@@ -70,6 +70,8 @@ npm install --save-dev css-mini-mini-mini
 
 ```sh
 $ cmmm input.css -o output.css
+# or
+$ cmmm <input.css >output.css
 ```
 
 When in doubt, get help:
