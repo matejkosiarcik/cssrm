@@ -1,0 +1,20 @@
+# OS stuff
+.DS_Store
+._*
+Thumbs.db
+[Dd]esktop.ini
+*~
+
+# dependencies
+node_modules/
+
+# editors
+*.sublime-*
+*.vim
+.idea/
+.vs/
+.vscode/
+Package Control.*
+
+# artifacts
+dist/

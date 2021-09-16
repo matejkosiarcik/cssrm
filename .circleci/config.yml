@@ -1,0 +1,27 @@
+version: 2.1
+
+workflows:
+  version: 2
+  circleci-build:
+    jobs:
+      - azlint
+
+jobs:
+  azlint:
+    docker:
+      - image: matejkosiarcik/azlint
+    steps:
+      - checkout
+      - run: |
+          if [ "$CIRCLE_BRANCH" = main ]; then
+            azlint
+          else
+            azlint --only-changed
+          fi
+
+  lint:
+    docker:
+      - image: node:lts
+    steps:
+      - checkout
+      - run: make bootstrap lint
