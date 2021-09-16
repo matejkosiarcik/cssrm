@@ -1,6 +1,6 @@
 {
   "name": "css-mini-mini-mini",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "CSS (almost) remynifier",
   "homepage": "https://github.com/matejkosiarcik/css-mini-mini-mini#readme",
@@ -27,17 +27,18 @@
     "node": ">=10"
   },
   "bin": {
-    "cmmm": "dist/main.js"
+    "cmmm": "bin/cli.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "dist/main.js"
+    "dist/main.js",
+    "bin/cli.js"
   ],
   "scripts": {
     "build": "tsc",
-    "test": "cross-env COMMAND=\"node dist/main.js\" ./node_modules/bats/bin/bats --recursive tests",
+    "test": "cross-env COMMAND=\"./bin/cli.js\" ./node_modules/bats/bin/bats --recursive tests",
     "lint": "eslint --max-warnings 0 \"**/*.{ts,js}\"",
     "fmt": "eslint --fix \"**/*.{ts,js}\""
   },
