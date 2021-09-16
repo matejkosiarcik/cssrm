@@ -7,8 +7,8 @@
 <!-- toc -->
 
 - [About](#about)
-  * [Features](#features)
-  * [Benchmark](#benchmark)
+  - [Features](#features)
+  - [Benchmark](#benchmark)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
