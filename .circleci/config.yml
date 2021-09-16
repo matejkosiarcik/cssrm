@@ -5,6 +5,7 @@ workflows:
   circleci-build:
     jobs:
       - azlint
+      - lint
 
 jobs:
   azlint:
