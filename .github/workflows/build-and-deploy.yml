@@ -1,0 +1,30 @@
+name: Build and Deploy
+
+on:
+  release: # only on releases
+    types:
+      - published
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup nodeJS 🧩
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 16
+
+      - name: Build 🔧
+        run: make bootstrap build
+
+      - name: Publish to npmjs.org 🚀
+        uses: JS-DevTools/npm-publish@v1.4.3
+        if: github.repository == 'matejkosiarcik/css-mini-mini-mini'
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ./package.json
+          check-version: true
+          access: public
