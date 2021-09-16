@@ -98,6 +98,11 @@ async function optimizeFile(input: string, output: string) {
     }
   }
 
+  if (verbose) {
+    console.error(`${path.basename(inputPath)}: ${await getSize(inputPath)}`);
+    console.error();
+  }
+
   // basically optimize till we can
   // when we stop getting any gains, we stop
   let bestFilePath = inputPath;
@@ -153,9 +158,10 @@ async function getVersion(): Promise<string> {
   const argv: any = yargs(hideBin(process.argv))
     .help(true)
     .version(false)
+    .scriptName('cmmm')
     .command('$0 [file]', 'General description...')
     .positional('file', {
-      alias: 'f', describe: 'Input file path (- for stdin)', type: 'string', required: true,
+      describe: 'Input file path (- for stdin)', type: 'string', default: '-', required: true,
     })
     .option('help', {
       alias: 'h', describe: 'Show usage', type: 'boolean',
