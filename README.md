@@ -18,7 +18,7 @@
 ## About
 
 (Let me introduce some theory first).
-In the past, there was this greate article <https://luisant.ca/remynifier> by
+In the past, there was this great article <https://luisant.ca/remynifier> by
 _Remy Luisan_ which introduced the idea of running multiple CSS minifiers on the
 same \[style\] file \[in serial\] to get better minification results than any
 single CSS minifier achieves on it's own.
