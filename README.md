@@ -78,7 +78,7 @@ When in doubt, get help:
 
 ```sh
 $ cmmm --help
-cmmm [file]
+cmmm [file] [options...]
 
 General description...
 
@@ -88,8 +88,7 @@ Positionals:
 Options:
   -h, --help     Show usage                                            [boolean]
   -V, --version  Show current version                                  [boolean]
-  -o, --output   Output file path (- for stdout)
-                                              [string] [required] [default: "-"]
+  -o, --output   Output file path (- for stdout)         [string] [default: "-"]
   -v, --verbose  Verbose logging                                       [boolean]
 ```
 

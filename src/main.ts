@@ -159,9 +159,9 @@ async function getVersion(): Promise<string> {
     .help(true)
     .version(false)
     .scriptName('cmmm')
-    .command('$0 [file]', 'General description...')
+    .command('$0 [file] [options...]', 'General description...')
     .positional('file', {
-      describe: 'Input file path (- for stdin)', type: 'string', default: '-', required: true,
+      describe: 'Input file path (- for stdin)', type: 'string', default: '-',
     })
     .option('help', {
       alias: 'h', describe: 'Show usage', type: 'boolean',
@@ -170,7 +170,7 @@ async function getVersion(): Promise<string> {
       alias: 'V', describe: 'Show current version', type: 'boolean',
     })
     .option('output', {
-      alias: 'o', describe: 'Output file path (- for stdout)', type: 'string', default: '-', required: true,
+      alias: 'o', describe: 'Output file path (- for stdout)', type: 'string', default: '-',
     })
     .option('verbose', {
       alias: 'v', describe: 'Verbose logging', type: 'boolean',
