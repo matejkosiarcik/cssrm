@@ -55,7 +55,7 @@
     "@types/node": "^16.11.6",
     "@types/yargs": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
-    "@typescript-eslint/parser": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.1",
     "bats": "^1.5.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
