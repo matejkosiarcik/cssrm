@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa } from 'execa';
 import * as fs from 'fs/promises';
 import * as fsSync from 'fs';
 import path from 'path';
@@ -6,8 +6,7 @@ import hasha from 'hasha';
 import * as os from 'os';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-
-/* eslint-disable no-await-in-loop, no-restricted-syntax */
+import { fileURLToPath } from 'url';
 
 let verbose = false;
 
@@ -106,6 +105,7 @@ async function optimizeFile(input: string, output: string) {
   // basically optimize till we can
   // when we stop getting any gains, we stop
   let bestFilePath = inputPath;
+  /* eslint-disable no-await-in-loop */
   for (let i = 0; i < 10; i += 1) {
     const stageDir = await fs.mkdtemp(tmpdir);
     const stageOutputPaths = await optimizeFileSingleStage(bestFilePath, stageDir);
@@ -129,6 +129,7 @@ async function optimizeFile(input: string, output: string) {
 
     bestFilePath = stageOutputs[0].file;
   }
+  /* eslint-enable no-await-in-loop */
 
   if (output === '-') { // write output to stdout when "-"
     const outContent = await fs.readFile(bestFilePath, 'utf-8');
@@ -141,7 +142,14 @@ async function optimizeFile(input: string, output: string) {
 }
 
 async function getVersion(): Promise<string> {
-  const packagePath = path.join(path.dirname(__dirname), 'package.json');
+  let filePath = '';
+  try {
+    filePath = __filename;
+  } catch {
+    filePath = fileURLToPath(import.meta.url);
+  }
+  const projectPath = path.dirname(path.dirname(path.resolve(filePath)));
+  const packagePath = path.join(projectPath, 'package.json');
   try {
     const packageContent = await fs.readFile(packagePath, 'utf-8');
     const { version } = JSON.parse(packageContent);

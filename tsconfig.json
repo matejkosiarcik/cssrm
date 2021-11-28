@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es5",
+    "target": "es2015",
+    "module": "es2020",
     "lib": ["es5"],
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "allowJs": false,
     "noFallthroughCasesInSwitch": true,
