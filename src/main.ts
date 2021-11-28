@@ -7,8 +7,6 @@ import * as os from 'os';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-/* eslint-disable no-await-in-loop, no-restricted-syntax */
-
 let verbose = false;
 
 const minifiers = [
@@ -106,6 +104,7 @@ async function optimizeFile(input: string, output: string) {
   // basically optimize till we can
   // when we stop getting any gains, we stop
   let bestFilePath = inputPath;
+  /* eslint-disable no-await-in-loop */
   for (let i = 0; i < 10; i += 1) {
     const stageDir = await fs.mkdtemp(tmpdir);
     const stageOutputPaths = await optimizeFileSingleStage(bestFilePath, stageDir);
@@ -129,6 +128,7 @@ async function optimizeFile(input: string, output: string) {
 
     bestFilePath = stageOutputs[0].file;
   }
+  /* eslint-enable no-await-in-loop */
 
   if (output === '-') { // write output to stdout when "-"
     const outContent = await fs.readFile(bestFilePath, 'utf-8');
