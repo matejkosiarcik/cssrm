@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa } from 'execa';
 import * as fs from 'fs/promises';
 import * as fsSync from 'fs';
 import path from 'path';
