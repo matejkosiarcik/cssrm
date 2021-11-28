@@ -6,6 +6,7 @@ import hasha from 'hasha';
 import * as os from 'os';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
 
 let verbose = false;
 
@@ -141,7 +142,14 @@ async function optimizeFile(input: string, output: string) {
 }
 
 async function getVersion(): Promise<string> {
-  const packagePath = path.join(path.dirname(__dirname), 'package.json');
+  let filePath = '';
+  try {
+    filePath = __filename;
+  } catch {
+    filePath = fileURLToPath(import.meta.url);
+  }
+  const projectPath = path.dirname(path.dirname(path.resolve(filePath)));
+  const packagePath = path.join(projectPath, 'package.json');
   try {
     const packageContent = await fs.readFile(packagePath, 'utf-8');
     const { version } = JSON.parse(packageContent);

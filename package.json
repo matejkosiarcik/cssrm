@@ -4,6 +4,7 @@
   "license": "MIT",
   "description": "CSS (almost) remynifier",
   "homepage": "https://github.com/matejkosiarcik/css-mini-mini-mini#readme",
+  "type": "module",
   "keywords": [
     "css",
     "minifier",
@@ -24,7 +25,7 @@
     "url": "https://github.com/matejkosiarcik/css-mini-mini-mini.git"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "bin": {
     "cmmm": "bin/cli.js"
