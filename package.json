@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.2",
-    "@types/yargs": "^17.0.7",
+    "@types/yargs": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "bats": "^1.5.0",
