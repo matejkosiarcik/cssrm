@@ -12,7 +12,7 @@ function teardown() {
     rm -rf "$tmpdir"
 }
 
-@test 'Standard input' {
+@test 'Single file - Standard input' {
     # given
     reference_input='data/style.css'
 
@@ -25,7 +25,7 @@ function teardown() {
     [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
 }
 
-@test 'Standard output' {
+@test 'Single file - Standard output' {
     # given
     reference_input='data/style.css'
 
@@ -37,20 +37,7 @@ function teardown() {
     [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
 }
 
-@test 'Long argument' {
-    # given
-    reference_input='data/style.css'
-
-    # when
-    run $COMMAND "$reference_input" --output "$tmpdir/out.txt"
-
-    # then
-    [ "$status" -eq 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
-}
-
-@test 'Short argument' {
+@test 'Single file - Short output argument' {
     # given
     reference_input='data/style.css'
 
@@ -63,7 +50,20 @@ function teardown() {
     [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
 }
 
-@test 'Overwrite input' {
+@test 'Single file - Long output argument' {
+    # given
+    reference_input='data/style.css'
+
+    # when
+    run $COMMAND "$reference_input" --output "$tmpdir/out.txt"
+
+    # then
+    [ "$status" -eq 0 ]
+    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
+}
+
+@test 'Single file - Overwrite input' {
     # given
     reference_input='data/style.css'
     file="$tmpdir/style.css"

@@ -169,7 +169,7 @@ async function getVersion(): Promise<string> {
     .scriptName('cmmm')
     .command('$0 [file] [options...]', 'General description...')
     .positional('file', {
-      describe: 'Input file path (- for stdin)', type: 'string', default: '-',
+      describe: 'Input file path (- for stdin)', type: 'string', array: true, default: '-',
     })
     .option('help', {
       alias: 'h', describe: 'Show usage', type: 'boolean',
