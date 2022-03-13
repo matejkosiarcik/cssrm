@@ -62,3 +62,18 @@ function teardown() {
     [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
     [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
 }
+
+@test 'Overwrite input' {
+    # given
+    reference_input='data/style.css'
+    file="$tmpdir/style.css"
+    cp "$reference_input" "$file"
+
+    # when
+    run $COMMAND "$file" --overwrite
+
+    # then
+    [ "$status" -eq 0 ]
+    [ "$(wc -c <"$file")" -gt 0 ]
+    [ "$(wc -c <"$file")" -lt "$(wc -c <"$reference_input")" ]
+}
