@@ -183,6 +183,9 @@ async function getVersion(): Promise<string> {
     .option('verbose', {
       alias: 'v', describe: 'Verbose logging', type: 'boolean',
     })
+    .option('overwrite', {
+      describe: 'Overwrite input file (takes precedence over output)', type: 'boolean',
+    })
     .parse();
 
   if (argv.version) {
@@ -191,14 +194,15 @@ async function getVersion(): Promise<string> {
   }
   verbose = argv.verbose;
 
-  if (!argv.file) {
-    argv.file = '-';
-  }
-
   if (verbose) {
     console.log(`Input: ${argv.file === '-' ? '/dev/stdin' : path.resolve(argv.file)}`);
-    console.log(`Output: ${argv.output === '-' ? '/dev/stdout' : path.resolve(argv.output)}`);
+    if (argv.overwrite) {
+      console.log('Overwriting input file');
+    } else {
+      console.log(`Output: ${argv.output === '-' ? '/dev/stdout' : path.resolve(argv.output)}`);
+    }
   }
 
-  await optimizeFile(argv.file, argv.output);
+  const output = argv.overwrite ? argv.file : argv.output;
+  await optimizeFile(argv.file, output);
 })();
