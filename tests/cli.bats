@@ -42,7 +42,7 @@ function setup() {
 
     cli_version="$(printf '%s\n' "$output" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed -E 's~[a-zA-Z]~~g')"
     package_version="$(jq .version 'package.json' | sed -E 's~"~~g')"
-    [ "${cli_version}" = "${package_version}" ]
+    [ "$cli_version" = "$package_version" ]
 }
 
 @test 'Verify --version and -V equals' {
