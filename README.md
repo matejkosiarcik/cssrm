@@ -46,7 +46,7 @@ although it might be close enough ¯\\_(ツ)_/¯.
 
 I haven't done any exhaustive benchmarks yet.
 The only comparison I have is from the CSS on my
-personal webpage at <https://github.com/matejkosiarcik/matejkosiarcik.com>.
+personal site at <https://github.com/matejkosiarcik/matejkosiarcik.com>.
 
 | \-                   | CSS size \[B\] | possible gain \[%\] |
 | -------------------- | -------------- | ------------------- |
@@ -69,9 +69,14 @@ npm install --save-dev css-mini-mini-mini
 ## Usage
 
 ```sh
-$ cmmm input.css -o output.css
-# or
-$ cmmm <input.css >output.css
+# optimize single file
+$ cmmm style.css
+
+# optimize multiple files
+$ cmmm style.css vendor.css
+
+# optimize all css files in directory
+$ cmmm dist/
 ```
 
 When in doubt, get help:
