@@ -12,68 +12,101 @@ function teardown() {
     rm -rf "$tmpdir"
 }
 
-@test 'Single file - Standard input' {
+@test 'Non existant file' {
+    # when
+    run $COMMAND "$tmpdir/style.css"
+
+    # then
+    [ "$status" -ne 0 ]
+}
+
+@test 'Error - when missing file argument' {
+    # when
+    run $COMMAND
+
+    # then
+    [ "$status" -ne 0 ]
+}
+
+@test 'Error - when the file does not exist' {
+    # when
+    run $COMMAND "$tmpdir/style.css"
+
+    # then
+    [ "$status" -ne 0 ]
+}
+
+@test 'Error - when a file does not exist' {
     # given
-    reference_input='data/style.css'
+    cp 'data/style.css' "$tmpdir/style1.css"
 
     # when
-    run $COMMAND -o "$tmpdir/out.txt" <"$reference_input"
+    run $COMMAND "$tmpdir/style1.css" "$tmpdir/style2.css"
+
+    # then
+    [ "$status" -ne 0 ]
+}
+
+@test 'Optimize single file' {
+    # given
+    cp 'data/style.css' "$tmpdir/style.css"
+
+    # when
+    run $COMMAND "$tmpdir/style.css"
 
     # then
     [ "$status" -eq 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
+    [ "$(wc -c <"$tmpdir/style.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style.css")" -lt "$(wc -c <'data/style.css')" ]
 }
 
-@test 'Single file - Standard output' {
+@test 'Optimize multiple files' {
     # given
-    reference_input='data/style.css'
+    cp 'data/style.css' "$tmpdir/style1.css"
+    cp 'data/style.css' "$tmpdir/style2.css"
+    cp 'data/style.css' "$tmpdir/style3.css"
 
     # when
-    $COMMAND "$reference_input" >"$tmpdir/out.txt"
-
-    # then
-    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
-}
-
-@test 'Single file - Short output argument' {
-    # given
-    reference_input='data/style.css'
-
-    # when
-    run $COMMAND "$reference_input" -o "$tmpdir/out.txt"
+    run $COMMAND "$tmpdir/style1.css" "$tmpdir/style2.css"
 
     # then
     [ "$status" -eq 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -lt "$(wc -c <'data/style.css')" ]
+    [ "$(wc -c <"$tmpdir/style2.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style2.css")" -lt "$(wc -c <'data/style.css')" ]
+    [ "$(wc -c <"$tmpdir/style3.css")" -eq "$(wc -c <'data/style.css')" ]
 }
 
-@test 'Single file - Long output argument' {
+@test 'Optimize directory' {
     # given
-    reference_input='data/style.css'
+    cp 'data/style.css' "$tmpdir/style1.css"
+    cp 'data/style.css' "$tmpdir/style2.css"
 
     # when
-    run $COMMAND "$reference_input" --output "$tmpdir/out.txt"
+    run $COMMAND "$tmpdir"
 
     # then
     [ "$status" -eq 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -gt 0 ]
-    [ "$(wc -c <"$tmpdir/out.txt")" -lt "$(wc -c <"$reference_input")" ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -lt "$(wc -c <'data/style.css')" ]
+    [ "$(wc -c <"$tmpdir/style2.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style2.css")" -lt "$(wc -c <'data/style.css')" ]
 }
 
-@test 'Single file - Overwrite input' {
+@test 'Optimize directory (recursively)' {
     # given
-    reference_input='data/style.css'
-    file="$tmpdir/style.css"
-    cp "$reference_input" "$file"
+    cp 'data/style.css' "$tmpdir/style1.css"
+    mkdir -p "$tmpdir/nested"
+    cp 'data/style.css' "$tmpdir/nested/style2.css"
 
     # when
-    run $COMMAND "$file" --overwrite
+    run $COMMAND "$tmpdir"
 
     # then
     [ "$status" -eq 0 ]
-    [ "$(wc -c <"$file")" -gt 0 ]
-    [ "$(wc -c <"$file")" -lt "$(wc -c <"$reference_input")" ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/style1.css")" -lt "$(wc -c <'data/style.css')" ]
+    [ "$(wc -c <"$tmpdir/nested/style2.css")" -gt 0 ]
+    [ "$(wc -c <"$tmpdir/nested/style2.css")" -lt "$(wc -c <'data/style.css')" ]
 }

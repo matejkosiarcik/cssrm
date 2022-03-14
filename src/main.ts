@@ -10,6 +10,27 @@ import { fileURLToPath } from 'url';
 
 let verbose = false;
 
+async function getVersion(): Promise<string> {
+  let filePath = '';
+  try {
+    filePath = __filename;
+  } catch {
+    filePath = fileURLToPath(import.meta.url);
+  }
+  const projectPath = path.dirname(path.dirname(path.resolve(filePath)));
+  const packagePath = path.join(projectPath, 'package.json');
+  try {
+    const packageContent = await fs.readFile(packagePath, 'utf-8');
+    const { version } = JSON.parse(packageContent);
+    if (version) {
+      return version;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return 'N/A';
+}
+
 const minifiers = [
   {
     name: 'cleancss',
@@ -82,7 +103,7 @@ async function optimizeFileSingleStage(inputPath: string, workDir: string): Prom
  * Optimize given file
  * input >> optimize >> output
  */
-async function optimizeFile(input: string, output: string) {
+async function optimizeFile(input: string) {
   const tmpdir = await fs.mkdtemp(path.join(os.tmpdir(), 'cmmm_'));
 
   // determine filepath to read
@@ -131,35 +152,36 @@ async function optimizeFile(input: string, output: string) {
   }
   /* eslint-enable no-await-in-loop */
 
-  if (output === '-') { // write output to stdout when "-"
-    const outContent = await fs.readFile(bestFilePath, 'utf-8');
-    process.stdout.write(outContent, 'utf-8');
-  } else { // copy to output filepath otherwise
-    await fs.copyFile(bestFilePath, output);
-  }
-
+  await fs.copyFile(bestFilePath, input);
   await fs.rm(tmpdir, { recursive: true, force: true });
 }
 
-async function getVersion(): Promise<string> {
-  let filePath = '';
-  try {
-    filePath = __filename;
-  } catch {
-    filePath = fileURLToPath(import.meta.url);
-  }
-  const projectPath = path.dirname(path.dirname(path.resolve(filePath)));
-  const packagePath = path.join(projectPath, 'package.json');
-  try {
-    const packageContent = await fs.readFile(packagePath, 'utf-8');
-    const { version } = JSON.parse(packageContent);
-    if (version) {
-      return version;
+async function readDirectory(directory: string): Promise<string[]> {
+  const files = (await fs.readdir(directory)).map((file) => path.join(directory, file));
+
+  const output = await Promise.all(files.map(async (file) => {
+    const stats = await fs.stat(file);
+    if (stats.isDirectory()) {
+      return readDirectory(file);
     }
-  } catch (error) {
-    console.error(error);
-  }
-  return 'N/A';
+    if (/\.css$/.test(file)) {
+      return [file];
+    }
+    return [];
+  }));
+  return output.flat();
+}
+
+async function optimizeFiles(files: string[]) {
+  const cssFiles = (await Promise.all(files.map(async (file) => {
+    const stats = await fs.stat(file);
+    if (stats.isDirectory()) {
+      return readDirectory(file);
+    }
+    return [file];
+  }))).flat();
+
+  await Promise.all(cssFiles.map((file) => optimizeFile(file)));
 }
 
 (async () => {
@@ -167,9 +189,9 @@ async function getVersion(): Promise<string> {
     .help(true)
     .version(false)
     .scriptName('cmmm')
-    .command('$0 [file] [options...]', 'General description...')
+    .command('$0 [file...] [options...]', 'General description...')
     .positional('file', {
-      describe: 'Input file path (- for stdin)', type: 'string', array: true, default: '-',
+      describe: 'Input file or directory paths', type: 'string',
     })
     .option('help', {
       alias: 'h', describe: 'Show usage', type: 'boolean',
@@ -177,14 +199,8 @@ async function getVersion(): Promise<string> {
     .option('version', {
       alias: 'V', describe: 'Show current version', type: 'boolean',
     })
-    .option('output', {
-      alias: 'o', describe: 'Output file path (- for stdout)', type: 'string', default: '-',
-    })
     .option('verbose', {
       alias: 'v', describe: 'Verbose logging', type: 'boolean',
-    })
-    .option('overwrite', {
-      describe: 'Overwrite input file (takes precedence over output)', type: 'boolean',
     })
     .parse();
 
@@ -194,15 +210,13 @@ async function getVersion(): Promise<string> {
   }
   verbose = argv.verbose;
 
-  if (verbose) {
-    console.log(`Input: ${argv.file === '-' ? '/dev/stdin' : path.resolve(argv.file)}`);
-    if (argv.overwrite) {
-      console.log('Overwriting input file');
-    } else {
-      console.log(`Output: ${argv.output === '-' ? '/dev/stdout' : path.resolve(argv.output)}`);
-    }
+  if (!argv.file) {
+    console.error('No file specified');
+    process.exit(1);
   }
 
-  const output = argv.overwrite ? argv.file : argv.output;
-  await optimizeFile(argv.file, output);
+  // Yargs does not seem to parse multiple positionals correctly into the same property, so we have to workaround it
+  const files = [argv.file].concat(argv.options);
+  console.log(files);
+  await optimizeFiles(files);
 })();

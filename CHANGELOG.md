@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## \[0.1.2\] - 2022-03-13
 
 - Added
-  - Add flag for overwriting input file
-  - Accept multiple input files or folders
+  - Accept multiple files and directories
+- Changed
+  - Remove `--output` flag (now the program always overwrites it's inputs)
 
 ## \[0.1.1\] - 2021-09-16
 

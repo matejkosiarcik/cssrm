@@ -69,9 +69,7 @@ npm install --save-dev css-mini-mini-mini
 ## Usage
 
 ```sh
-$ cmmm input.css -o output.css
-# or
-$ cmmm <input.css >output.css
+$ cmmm input.css
 ```
 
 When in doubt, get help:

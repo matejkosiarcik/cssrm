@@ -15,7 +15,6 @@ function setup() {
     printf '%s\n' "$output" | grep -- '--help'
     printf '%s\n' "$output" | grep -- '--version'
     printf '%s\n' "$output" | grep 'file'
-    printf '%s\n' "$output" | grep -- '--output'
 }
 
 @test 'Verify --help and -h equals' {
@@ -37,7 +36,8 @@ function setup() {
     [ "$status" -eq 0 ]
     printf '%s\n' "$output" | grep 'css-mini-mini-mini'
     printf '%s\n' "$output" | grep -v '0.0.0'
-    printf '%s\n' "$output" | grep -v 'N/A'
+    printf '%s\n' "$output" | grep -iv 'm/a'
+    printf '%s\n' "$output" | grep -iv 'unknown'
     printf '%s\n' "$output" | grep -E 'v[0-9]+\.[0-9]+\.[0-9]+'
 
     cli_version="$(printf '%s\n' "$output" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed -E 's~[a-zA-Z]~~g')"
