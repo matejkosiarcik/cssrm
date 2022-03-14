@@ -173,6 +173,13 @@ async function readDirectory(directory: string): Promise<string[]> {
 }
 
 async function optimizeFiles(files: string[]) {
+  files.forEach((file) => {
+    if (!fsSync.existsSync(file)) {
+      console.error(`File not exist: ${file}`);
+      process.exit(1);
+    }
+  });
+
   const cssFiles = (await Promise.all(files.map(async (file) => {
     const stats = await fs.stat(file);
     if (stats.isDirectory()) {
