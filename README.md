@@ -69,7 +69,14 @@ npm install --save-dev css-mini-mini-mini
 ## Usage
 
 ```sh
-$ cmmm input.css
+# optimize single file
+$ cmmm style.css
+
+# optimize multiple files
+$ cmmm style.css vendor.css
+
+# optimize all css files in directory
+$ cmmm dist/
 ```
 
 When in doubt, get help:
