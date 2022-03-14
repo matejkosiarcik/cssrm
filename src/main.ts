@@ -152,6 +152,19 @@ async function optimizeFile(input: string) {
   }
   /* eslint-enable no-await-in-loop */
 
+  if (verbose) {
+    const [inputStats, outputStats] = await Promise.all([
+      fs.stat(input),
+      fs.stat(bestFilePath),
+    ]);
+    const [inputSize, outputSize] = [
+      inputStats.size,
+      outputStats.size,
+    ];
+    const ratio = (outputSize / inputSize).toFixed(3);
+    console.error(`${input}: ${inputSize}B -> ${outputSize}B ${ratio}%`);
+  }
+
   await fs.copyFile(bestFilePath, input);
   await fs.rm(tmpdir, { recursive: true, force: true });
 }
