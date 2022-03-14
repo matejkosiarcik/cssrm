@@ -46,7 +46,7 @@ although it might be close enough ¯\\_(ツ)_/¯.
 
 I haven't done any exhaustive benchmarks yet.
 The only comparison I have is from the CSS on my
-personal webpage at <https://github.com/matejkosiarcik/matejkosiarcik.com>.
+personal website at <https://github.com/matejkosiarcik/matejkosiarcik.com>.
 
 | \-                   | CSS size \[B\] | possible gain \[%\] |
 | -------------------- | -------------- | ------------------- |
