@@ -12,7 +12,7 @@ function teardown() {
     rm -rf "$tmpdir"
 }
 
-@test 'Non existant file' {
+@test 'Non existent file' {
     # when
     run $COMMAND "$tmpdir/style.css"
 
