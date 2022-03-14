@@ -217,6 +217,5 @@ async function optimizeFiles(files: string[]) {
 
   // Yargs does not seem to parse multiple positionals correctly into the same property, so we have to workaround it
   const files = [argv.file].concat(argv.options);
-  console.log(files);
   await optimizeFiles(files);
 })();
