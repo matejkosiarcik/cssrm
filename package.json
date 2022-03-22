@@ -53,10 +53,10 @@
     "yargs": "^17.4.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.22",
     "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@typescript-eslint/parser": "^5.16.0",
     "bats": "^1.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
