@@ -47,7 +47,7 @@
     "clean-css-cli": "^5.6.1",
     "crass": "^0.12.3",
     "cssnano-cli": "^1.0.5",
-    "csso-cli": "^3.0.0",
+    "csso-cli": "^4.0.1",
     "execa": "^6.1.0",
     "hasha": "^5.2.2",
     "yargs": "^17.5.1"
@@ -55,7 +55,7 @@
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/yargs": "^17.0.10",
-    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "bats": "^1.7.0",
     "cross-env": "^7.0.3",
