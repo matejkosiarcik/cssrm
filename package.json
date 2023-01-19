@@ -44,7 +44,7 @@
     "fmt": "eslint --fix \"**/*.{ts,js}\""
   },
   "dependencies": {
-    "clean-css-cli": "^5.6.1",
+    "clean-css-cli": "^5.6.2",
     "crass": "^0.12.3",
     "cssnano-cli": "^1.0.5",
     "csso-cli": "^4.0.1",
