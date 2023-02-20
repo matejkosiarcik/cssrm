@@ -50,7 +50,7 @@
     "csso-cli": "^4.0.1",
     "execa": "^7.0.0",
     "hasha": "^5.2.2",
-    "yargs": "^17.6.2"
+    "yargs": "^17.7.0"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
